@@ -4,20 +4,26 @@ const validator = require("validator");
 const config = require("../config/config");
 
 //  A Mongoose schema for "users" collection
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
-    name: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
+      default: "",
     },
+    username: { 
+        type: String, 
+        unique: true, 
+        lowercase: true,
+        required: true },
     email: {
-      type:String,
-      required:true,
+      type: String,
+      required: true,
       trim: true,
       unique: true,
-      lowercase:true,
-      validate:(value)=>validator.isEmail(value),
+      lowercase: true,
+      validate: (value) => validator.isEmail(value),
     },
     password: {
       type: String,
@@ -28,13 +34,13 @@ const userSchema = mongoose.Schema(
           );
         }
       },
-      required:true, 
+      required: true,
       trim: true,
-      minLength:8
+      minLength: 8,
     },
     role: {
-      type:String,
-      default: 'user'
+      type: String,
+      default: "user",
     },
   },
   // Create createdAt and updatedAt fields automatically
@@ -50,16 +56,13 @@ const userSchema = mongoose.Schema(
  * @returns {Promise<boolean>}
  */
 userSchema.statics.isEmailTaken = async function (email) {
-    const emailSearch = await this.findOne({email:email});
-    if(emailSearch.length){
-      return true
-    }else{
-      return false
-    }
+  const emailSearch = await this.findOne({ email: email });
+  if (emailSearch.length) {
+    return true;
+  } else {
+    return false;
+  }
 };
-
-
-
 
 /*
  * Create a Mongoose model out of userSchema and export the model as "User"
@@ -70,4 +73,4 @@ userSchema.statics.isEmailTaken = async function (email) {
 
 const User = mongoose.model("users", userSchema);
 
-module.exports = {User};
+module.exports =  User ;
