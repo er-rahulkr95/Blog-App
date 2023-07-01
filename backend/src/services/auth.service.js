@@ -29,11 +29,10 @@ class AuthService{
     login = async(loginData) => {
 
         try{
-            const userLoggedInDetail = await this.verifyPassword(loginData.username, loginData.password);
-            
+            const userLoggedInDetail = await this.verifyPassword(loginData.email, loginData.password);
             if(userLoggedInDetail){
                     const token = await this.generateToken(userLoggedInDetail._id)
-                return { isLoggedIn: true, userId: userLoggedInDetail._id, role:userLoggedInDetail.role, jwt:token };
+                return { isLoggedIn: true, userId: userLoggedInDetail._id, role:userLoggedInDetail.role, fullName:userLoggedInDetail.fullName, username:userLoggedInDetail.username, jwt:token };
 
             }else{
                 return {isLoggedIn: false};
@@ -43,9 +42,9 @@ class AuthService{
         }
     }
 
-    verifyPassword = async(username, password) =>{
+    verifyPassword = async(email, password) =>{
         try{    
-                const userFromDb = await UserServiceInstance.findByUsername(username);
+                const userFromDb = await UserServiceInstance.findByEmail(email);
                 const userPasswordFromDb = userFromDb.password;
                 const isValidPassword = await bcrypt.compare(password, userPasswordFromDb);
                 if(isValidPassword){

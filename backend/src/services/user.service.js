@@ -1,4 +1,4 @@
-const Users = require("../models/user.model");
+const {Users} = require("../models");
 
 class UserService {
   register = async (user) => {
@@ -17,10 +17,10 @@ class UserService {
     return userResult;
   };
 
-  findByUsername = async (username) => {
+  findByEmail = async (email) => {
   
     try {
-      const userResult = await Users.findOne({ username });
+      const userResult = await Users.findOne({ email });
       return userResult;
     } catch (error) {
       throw error;

@@ -2,7 +2,9 @@ const Joi = require("joi");
 
 
 const loginBodyValidationSchema = Joi.object().keys({
-    username: Joi.string().required(),
+  email: Joi.string()
+  .required()
+  .email({ tlds: { allow: false } }),
     password: Joi.string().required(),
    });
    

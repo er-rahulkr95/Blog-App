@@ -12,11 +12,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
-    username: { 
-        type: String, 
-        unique: true, 
-        lowercase: true,
-        required: true },
+    username: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      required: true
+    },
     email: {
       type: String,
       required: true,
@@ -71,6 +72,6 @@ userSchema.statics.isEmailTaken = async function (email) {
  * @typedef User
  */
 
-const User = mongoose.model("users", userSchema);
+const Users = mongoose.model("User", userSchema);
 
-module.exports =  User ;
+module.exports = {Users};

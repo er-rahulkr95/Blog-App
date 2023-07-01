@@ -7,7 +7,8 @@ const userValidationSchema = Joi.object().keys({
     .required()
     .email({ tlds: { allow: false } }),
   password:Joi.string().required(),
-  role: Joi.string().default("user")
+  role: Joi.string().default("user"),
+  image:Joi.string().default("")
 });
 
 module.exports = { userValidationSchema };

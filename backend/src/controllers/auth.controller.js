@@ -1,23 +1,24 @@
 const AuthService = require("../services/auth.service");
 const AuthServiceInstance = new AuthService();
+const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
+const catchAsync = require("../utils/catchAsync");
 
-const postSignup = async(request,response)=>{
+
+const postSignup =catchAsync( async(request,response)=>{
     try{
         const userSignup = await AuthServiceInstance.signup(request.body)
         response.status(200).json(userSignup);
     }catch(error) {
         if (error.code === 11000) {
-            response.status(409).json({
-            message: "Failed to create new user",
-            reason: "User already registered",
-          });
+            throw new ApiError(httpStatus.CONFLICT, "User already registered")
         } else {
-            response.status(500).json({ message: "Failed to create new user", error });
+            throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to create new user")
         }
       }
-}
+})
 
-const postLogin = async(request,response)=>{
+const postLogin = catchAsync(async(request,response)=>{
     try{
         const userLogin= await AuthServiceInstance.login(request.body);
         if (userLogin.isLoggedIn) {
@@ -27,13 +28,13 @@ const postLogin = async(request,response)=>{
             })
             response.status(200).json(userLogin);
           } else {
-            response.status(403).json({ message: "Invalid Credentials" });
+         throw new ApiError(httpStatus.FORBIDDEN, "Invalid Credentials")
           }
        
     }catch(error){
-        response.status(500).json({ message: "Failed to login", error });
+         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to login")
     }
-}
+})
 
 const postLogout = (request,response,next) =>{
         response.clearCookie(('token'));
@@ -43,13 +44,13 @@ const postLogout = (request,response,next) =>{
         })
 }
 
-const userProfile = async (request, response, next) => {
+const userProfile = catchAsync(async (request, response, next) => {
     try{
         const profile = await AuthServiceInstance.getUserProfile(request.user.id);
         response.status(200).json(profile)
     }catch(error){
-        response.status(500).json({ message: "Cannot get user profile", error });
+        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Cannot get user profile");
     }
-}
+})
 
 module.exports = {postSignup, postLogin, postLogout,userProfile};

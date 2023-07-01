@@ -1,37 +1,25 @@
 const UserService = require("../services/user.service");
 const UserServiceInstance = new UserService();
+const ApiError = require("../utils/ApiError");
+const catchAsync = require("../utils/catchAsync");
+const httpStatus = require("http-status");
 
-const fetchUserInCollection = async (req, res, next) => {
+
+const checkUserExistsInDB = catchAsync(async (req, res, next) => {
   try {
-    const { author } = req.body;
-    const user = await UserServiceInstance.findByUsername(author);
+    const { email } = req.body;
+    const user = await UserServiceInstance.findByEmail(email);
     if (!user)
-      return res
-        .status(404)
-        .json({ message: "User not found!", username: author });
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
     else {
       next();
     }
   } catch (error) {
-    res.status(500).json({ message: "Could not find user" });
-  }
-};
-
-
-const fetchUserNameInCollection = async (req, res, next) => {
-  try {
-    const { username } = req.body;
-    const user = await UserServiceInstance.findByUsername(username);
-    if (!user)
-      return res
-        .status(404)
-        .json({ message: "User not found!", username: username });
-    else {
-      next();
+    throw new ApiError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      "Could not find user"
+    );
     }
-  } catch (error) {
-    res.status(500).json({ message: "Could not find user" });
-  }
-};
+});
 
-module.exports = { fetchUserInCollection, fetchUserNameInCollection };
+module.exports = {checkUserExistsInDB };
