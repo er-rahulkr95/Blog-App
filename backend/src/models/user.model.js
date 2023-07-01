@@ -15,8 +15,9 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       unique: true,
-      lowercase: true,
-      required: true
+      required: true,
+      unique:true,
+      trim:true
     },
     email: {
       type: String,
@@ -28,19 +29,21 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
+      validate:{
+        validator:(value) =>{
+        if (!value.match(/\d/) && !value.match(/[a-zA-Z]/)) {
           throw new Error(
             "Password must contain at least one letter and one number"
           );
         }
-      },
+      }},
       required: true,
       trim: true,
       minLength: 8,
     },
     role: {
       type: String,
+      trim:true,
       default: "user",
     },
   },
@@ -50,20 +53,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Implement the isEmailTaken() static method
-/**
- * Check if email is taken
- * @param {string} email - The user's email
- * @returns {Promise<boolean>}
- */
-userSchema.statics.isEmailTaken = async function (email) {
-  const emailSearch = await this.findOne({ email: email });
-  if (emailSearch.length) {
-    return true;
-  } else {
-    return false;
-  }
-};
 
 /*
  * Create a Mongoose model out of userSchema and export the model as "User"
