@@ -8,6 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import LockPersonIcon from "@mui/icons-material/LockPerson";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const NavBar = ({ hasHiddenAuthButtons }) => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -28,7 +29,7 @@ const NavBar = ({ hasHiddenAuthButtons }) => {
             Back to Blogs
           </Button>
         )}
-        {!hasHiddenAuthButtons && !localStorage.getItem("username") && (
+        {!hasHiddenAuthButtons && !localStorage.getItem("token") && (
           <Stack direction="row" spacing={1}>
             <Button className={styles.button} variant="text">
               Blogs
@@ -49,12 +50,15 @@ const NavBar = ({ hasHiddenAuthButtons }) => {
             </Button>
           </Stack>
         )}
-        {!hasHiddenAuthButtons && localStorage.getItem("username") && (
+        {!hasHiddenAuthButtons && localStorage.getItem("token") && (
           <Stack alignItems="center" direction="row" spacing={2}>
-            <Avatar src="avatar.png" alt={localStorage.getItem("username")} />
-            <div>{localStorage.getItem("username")}</div>
-            <Button className={styles.button} variant="text">
-              {matches ? "LOGOUT" : <LogoutIcon />}
+            <Avatar src="avatar.png" alt={localStorage.getItem("fullName")} />
+            <div className={styles.userName}>{localStorage.getItem("fullName")}</div>
+            <Button className={styles.button} variant="text" onClick={()=>navigate("/post/create")}>
+              {matches ? "Create Post" : <LogoutIcon />}
+            </Button>
+            <Button className={styles.button} variant="text" >
+              {matches ? "LOGOUT" : <EditNoteIcon />}
             </Button>
           </Stack>
         )}

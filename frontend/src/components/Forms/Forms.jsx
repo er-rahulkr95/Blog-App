@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Stack, TextField } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from "./Forms.module.css"
-const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction}) => {
+const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction, isLogin}) => {
 
     
   const formInputHandler =(event)=>{
@@ -22,7 +22,7 @@ const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction}) =>
     <Box className={styles.content} height="100%">
       <Stack spacing={2} className={styles.form}>
         <h2 className={styles.title}>{formText.heading}</h2>
-        <TextField
+      {!isLogin && (<> <TextField
           id="fullName"
           label="Full Name"
           variant="outlined"
@@ -38,12 +38,13 @@ const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction}) =>
           label="Username"
           variant="outlined"
           title="Username"
-          name="username"
+          name="userName"
           onChange={(event)=>formInputHandler(event)}
           value={inputDetails.userName}
           placeholder="Enter Username"
+          helperText="UserName must be atleast 6 characters length"
           fullWidth
-        />
+        /></>)}
          <TextField
           id="email"
           variant="outlined"
@@ -67,7 +68,7 @@ const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction}) =>
           fullWidth
           placeholder="Enter a password with minimum 8 characters"
         />
-        <TextField
+       {!isLogin && <TextField
           id="confirmPassword"
           variant="outlined"
           label="Confirm Password"
@@ -76,7 +77,7 @@ const Forms = ({inputDetails,setInputDetails,loading,formText, buttonAction}) =>
           onChange={(event)=>formInputHandler(event)}
           value={inputDetails.confirmPassword}
           fullWidth
-        />
+        />}
          { loading===false && (<Button variant="contained" onClick={buttonAction}>
          {formText.buttonText}
          </Button>)}

@@ -7,6 +7,7 @@ const catchAsync = require("../utils/catchAsync");
 
 const postSignup =catchAsync( async(request,response)=>{
     try{
+            // console.log(request.body)
         const userSignup = await AuthServiceInstance.signup(request.body)
         response.status(200).json(userSignup);
     }catch(error) {

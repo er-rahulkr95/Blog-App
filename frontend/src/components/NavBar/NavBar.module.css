@@ -23,6 +23,11 @@
     color: #673de6 !important;
 }
 
+.userName{
+    display: none;
+    text-transform:capitalize;
+}
+
 @media screen and (min-width: 768px) {
     .usernameText {
         display: block;
@@ -30,5 +35,8 @@
     .navBarTitle{
     letter-spacing: 0.25rem;
 
+    }
+    .userName{
+        display: block;
     }
 }

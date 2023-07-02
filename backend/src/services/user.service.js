@@ -3,8 +3,9 @@ const {Users} = require("../models");
 class UserService {
   register = async (user) => {
     try {
-      const { fullName, email, username, password } = user;
-      const newUser = new Users({ email, username, fullName, password });
+      
+      const { fullName, email, userName, password } = user;
+      const newUser = new Users({ fullName, email, userName, password });
       const result = await newUser.save();
       return result;
     } catch (error) {
