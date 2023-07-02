@@ -1,0 +1,17 @@
+{
+    "login":{
+        "heading": "Login",
+        "footer":"Don't have an account?",
+        "footerLink":"/register",
+        "footerLinkText":"Register Now",
+        "buttonText":"Login To QBlog"
+    },
+    "register":{
+        "heading": "Register- Create a new account",
+        "footer":"Already have an account?",
+        "footerLink":"/login",
+        "footerLinkText":"Login Here",
+        "buttonText":"Register Now"
+
+    }
+}

@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const userValidationSchema = Joi.object().keys({
   fullName: Joi.string().min(3).max(50).required(),
-  username: Joi.string().required().max(25),
+  userName: Joi.string().required().max(25),
   email: Joi.string()
     .required()
     .email({ tlds: { allow: false } }),

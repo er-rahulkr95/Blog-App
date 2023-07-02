@@ -1,3 +1,9 @@
+:root{
+  --primary-light: #ebe4ff;
+   --primary-main: #673de6;
+  --primary-dark: #5025d1;
+}
+
 *,
 *::before,
 *::after {
@@ -11,6 +17,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 
 
