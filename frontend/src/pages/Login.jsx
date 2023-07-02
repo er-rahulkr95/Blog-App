@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar/NavBar'
 import Footer from '../components/Footer/Footer'
 import { useNavigate } from 'react-router-dom'
@@ -39,7 +39,6 @@ const Login = () => {
    
     if (validateInput(inputDetails)) {
      const result = await dispatch(userLogIn(inputDetails));
-     persistLogin(user.jwt, user.fullName, user.userId, user.role, user.isLoggedIn)
      if(result.meta.requestStatus === "fulfilled"){
       navigate("/")
           }
@@ -49,6 +48,11 @@ const Login = () => {
 
   }
 
+  useEffect(()=>{
+    persistLogin(user.jwt, user.fullName, user.userId, user.role, user.isLoggedIn)
+  },[user]);
+
+  
   const persistLogin = (token, fullName, userId, role, isLoggedIn) => {
     localStorage.setItem("token",token);
     localStorage.setItem("fullName",fullName);

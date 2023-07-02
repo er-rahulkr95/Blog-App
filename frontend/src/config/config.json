@@ -1,3 +1,4 @@
 {
-    "apiEndpoint":"http://localhost:3000/auth"
+    "apiEndpoint":"http://localhost:3000/auth",
+    "apiEndpointPost":"http://localhost:3000/post"
 }

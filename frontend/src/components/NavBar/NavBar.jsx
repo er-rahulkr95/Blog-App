@@ -9,10 +9,20 @@ import LockPersonIcon from "@mui/icons-material/LockPerson";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import { useDispatch } from "react-redux";
+import { userLogOut } from "../../features/userAuthentication/userAuthAction";
 
 const NavBar = ({ hasHiddenAuthButtons }) => {
   const matches = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () =>{
+      dispatch(userLogOut())
+      window.location.reload();
+  }
+    
+
   return (
     <nav className={styles.navBar}>
       <Box className={styles.navBarTitle}>
@@ -57,7 +67,7 @@ const NavBar = ({ hasHiddenAuthButtons }) => {
             <Button className={styles.button} variant="text" onClick={()=>navigate("/post/create")}>
               {matches ? "Create Post" : <LogoutIcon />}
             </Button>
-            <Button className={styles.button} variant="text" >
+            <Button className={styles.button} variant="text" onClick={handleLogout}>
               {matches ? "LOGOUT" : <EditNoteIcon />}
             </Button>
           </Stack>
