@@ -24,7 +24,7 @@ const findPostById = catchAsync(async (req, res) => {
 
 const findPostsByUser = catchAsync(async (req, res) => {
   try {
-    const {userId } = req.params;
+    const {userId} = req.params;
     const result = await PostServiceInstance.findForUser(userId);
     if (result.length) {
       res.json(result);

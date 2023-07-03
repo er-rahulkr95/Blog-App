@@ -39,7 +39,7 @@ const CreatePost = () => {
 
   return (
     <div >
-    <NavBar hasHiddenAuthButtons />
+    <NavBar hasHomeButton/>
       <BlogPostForm handleSubmit={()=>handleSubmitPost()}/>
     <Footer />
   </div>

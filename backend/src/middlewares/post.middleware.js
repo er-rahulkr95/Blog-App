@@ -26,7 +26,7 @@ const verifyAuthor = catchAsync(async (req, res, next) => {
     const { postedBy } = req.body;
     const resourceToDelete = await PostServiceInstance.findWithId(postId);
     if (resourceToDelete) {
-      if (resourceToDelete.postedBy == postedBy) {
+      if (resourceToDelete.postedBy._id == postedBy) {
         next();
       } else {
     throw new ApiError(httpStatus.FORBIDDEN, "Post does not belong to author")

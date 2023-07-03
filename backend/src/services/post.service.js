@@ -5,6 +5,7 @@ const cloudinary = require("../config/cloudinary")
 class PostService {
   findWithId = async (postId) => {
     try {
+      
       const result = await Post.findById(postId).populate('comments.postedBy','fullName').populate('postedBy','fullName');
       return result;
     } catch (error) {
@@ -14,6 +15,7 @@ class PostService {
 
   findForUser = async (userId) => {
     try {
+      console.log(userId)
       const result = await Post.find({ postedBy: userId }).sort({createdAt:-1}).populate('postedBy','fullName');
       return result;
     } catch (error) {
@@ -133,7 +135,7 @@ class PostService {
                 const like = await Post.findByIdAndUpdate(postId,{
                   $addToSet:{likes:userId}
                 });
-            
+                  console.log(like)
                 return like;
           }catch(error){
             throw error;

@@ -30,7 +30,7 @@ router.post(
   createNewPost
 );
 router.get("/all", getAllPosts);
-router.get("/user/:userId", findPostsByUser);
+router.get("/user/:userId", authenticateToken, findPostsByUser);
 router.get("/id/:postId", findPostById);
 
 router.patch("/id/:postId", authenticateToken,verifyAuthor, updatePost);

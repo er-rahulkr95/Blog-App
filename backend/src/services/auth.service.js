@@ -9,7 +9,6 @@ class AuthService{
         try{
             const securedPassword = await this.encryptPassword(userDetails.password)
             const userSignup = await UserServiceInstance.register({...userDetails, password:securedPassword});
-            console.log(userSignup)
             return userSignup;
         }catch(error){
             throw error;

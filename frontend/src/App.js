@@ -7,7 +7,7 @@ import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Blog from './pages/Blog';
 import Register from './pages/Register';
-import UserBlogs from './pages/UserBlogs';
+import UserDashBoard from './pages/UserDashBoard';
 import Login from './pages/Login';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/post/:id' element={<Blog />} />
               <Route path='*' element={<NotFound/>} />
-              <Route path='/user/dashboard/:userId' element={<UserBlogs/>}  />
+              <Route path='/user/dashboard/:userId' element={<UserDashBoard/>}  />
               <Route path='/post/create' element={<CreatePost/>} />
               <Route path='/post/edit/:id' element={<EditPost/>} />
             

@@ -42,6 +42,11 @@ export const userLogIn = createAsyncThunk(
         userLoginData,
         { withCredentials: true }
       );
+      localStorage.setItem("token",data.jwt);
+      localStorage.setItem("fullName",data.fullName);
+      localStorage.setItem("userId",data.userId)
+      localStorage.setItem("role",data.role)
+      localStorage.setItem("isLoggedIn",data.isLoggedIn)
       toast.success("Logged In Successfully!");
       return data;
     } catch (error) {
@@ -71,9 +76,5 @@ export const userLogOut = createAsyncThunk(
       toast.error(errorResponse);
       return rejectWithValue(error);
     }
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("balance");
   }
 );

@@ -16,7 +16,7 @@ const Login = () => {
   })
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading,user } = useSelector((state) => state.app);
+  const { loading } = useSelector((state) => state.app);
 
 
   const validateInput = (data) => {
@@ -48,18 +48,6 @@ const Login = () => {
 
   }
 
-  useEffect(()=>{
-    persistLogin(user.jwt, user.fullName, user.userId, user.role, user.isLoggedIn)
-  },[user]);
-
-  
-  const persistLogin = (token, fullName, userId, role, isLoggedIn) => {
-    localStorage.setItem("token",token);
-    localStorage.setItem("fullName",fullName);
-    localStorage.setItem("userId",userId)
-    localStorage.setItem("role",role)
-    localStorage.setItem("isLoggedIn",isLoggedIn)
-  };
 
   return (
     <div>

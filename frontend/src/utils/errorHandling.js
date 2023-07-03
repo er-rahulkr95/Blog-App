@@ -26,25 +26,25 @@
 const errorHandler = (error) =>{
     if(error.response && error.response?.status){
         switch(error.response.status){
-            case 400 :  return error.response.statusText ;
+            case 400 :  return error.response.statusText || error.response.data ;
                         
-            case 401:    return error.response.data.message;
+            case 401:    return error.response.data.message || error.response.data ;
                       
-            case 403 :   return error.response.data.message ;
+            case 403 :   return error.response.data.message ||  error.response.data ;
                     
-            case 404 :    return error.response.data.message ;
+            case 404 :    return error.response.data.message || error.response.data ;
                        
-            case 408 :    return error.response.statusText ;
+            case 408 :    return error.response.statusText || error.response.data ;
 
-            case 409 :    return error.response.data.message ;
+            case 409 :    return error.response.data.message || error.response.data;
                       
-            case 500 :     return error.response.data.message ;
+            case 500 :     return error.response.data.message || error.response.data ;
                   
-            case 502 :    return error.response.statusText ;
+            case 502 :    return error.response.statusText || error.response.data ;
                        
-            case 503 :   return error.response.statusText ;
+            case 503 :   return error.response.statusText || error.response.data;
                       
-            case 504 :    return error.response.statusText ;
+            case 504 :    return error.response.statusText || error.response.data;
                         
             default :    return "Oops! Something Went Wrong Server Side" ;
                   
