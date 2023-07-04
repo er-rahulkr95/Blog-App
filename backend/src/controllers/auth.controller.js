@@ -24,6 +24,7 @@ const postLogin = catchAsync(async(request,response)=>{
         const cookieOptions = { maxAge: 24* 60 * 60 * 1000, httpOnly: true }
         if (process.env.NODE_ENV === 'production') {
             cookieOptions.secure = true
+            cookieOptions.sameSite = "None"
         }
         if (userLogin.isLoggedIn) {
             response.cookie("token", userLogin.jwt,cookieOptions)

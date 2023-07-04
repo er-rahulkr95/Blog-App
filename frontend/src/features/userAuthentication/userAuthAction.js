@@ -40,7 +40,7 @@ export const userLogIn = createAsyncThunk(
       const { data } = await axios.post(
         `${config.apiEndpoint}/auth/login`,
         userLoginData,
-        { withCredentials: true }
+        { withCredentials: true, credentials: 'include' }
       );
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("fullName", data.fullName);
