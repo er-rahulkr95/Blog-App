@@ -19,22 +19,39 @@ const UserDashBoard = () => {
   const { userId } = useParams();
   const { userBlog, loading, error } = useSelector((state) => state.blog);
   const navigate = useNavigate();
+
+
   const loadPost = () => {
+   
     dispatch(userDashBoardBlogs(userId));
   };
+
 
   const checkBlogExists = () => {
     if (userBlog.length === 0)
       if (error && error.includes("500")) {
-        toast.warning("It seems you dont have any let's create one");
+        toast.warn("It seems you dont have any let's create one");
         navigate("/post/create");
+      }else{
+        return
       }
   };
 
+ 
   useEffect(() => {
-    loadPost();
-    checkBlogExists();
+
+    if(!localStorage.getItem("token")){
+      toast.error("Please Login To view Your DashBoard");
+      navigate("/login")
+    }else{
+      checkBlogExists();
+      loadPost();
+    }
+     
+   
   }, []);
+
+
 
   return (
     <div>

@@ -9,10 +9,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addLike, removeLike } from '../../features/blogPost/blogPostAction';
 import PostModificationButtons from '../PostModificationButtons/PostModificationButtons';
+import { toast } from 'react-toastify';
 
 
 
@@ -30,21 +31,30 @@ const BlogPostCard = ({
 
    const userId = localStorage.getItem("userId")
 
-
+    const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
 
     //add like
     const handleAddLike =  () => {
-      dispatch(addLike({id,userId}))
+        if(!localStorage.getItem("token")){
+            toast.error("Please Login to Like/Dislike a Post")
+        }else{
+            dispatch(addLike({id,userId}))
+        }
+     
     }
 
 
 
     //remove like
     const handleRemoveLike = () => {
-      dispatch(removeLike({id,userId}))
+        if(!localStorage.getItem("token")){
+            toast.error("Please Login to Like/Dislike a Post")
+        }else{
+            dispatch(removeLike({id,userId}))
+        }
     }
 
         
@@ -76,11 +86,11 @@ const BlogPostCard = ({
 
                         {
                             likesId.includes(userId) ?
-                                <IconButton onClick={handleRemoveLike} aria-label="add to favorites">
+                                <IconButton onClick={handleRemoveLike} disabled={isDashBoard ? true :false} aria-label="Dislike">
                                     <FavoriteIcon sx={{ color: 'red' }} />
                                 </IconButton>
                                 :
-                                <IconButton onClick={handleAddLike} aria-label="add to favorites">
+                                <IconButton onClick={handleAddLike} disabled={isDashBoard ? true :false} aria-label="Like">
                                     <FavoriteBorderIcon sx={{ color: 'red' }} />
                                 </IconButton>
                         }
@@ -88,10 +98,12 @@ const BlogPostCard = ({
                         {likes} Like(s)
                     </Box>
                     <Box>
-                        {comments}
+                    {comments}
+                    <Link to={{pathname:`/post/${id}`, hash:"#comments"}}>
                         <IconButton aria-label="comment">
                             <CommentIcon />
                         </IconButton>
+                        </Link>
                     </Box>
                 </Box>
             </CardActions>

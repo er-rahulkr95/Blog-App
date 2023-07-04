@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import BlogPostForm from "../components/BlogPostForm/BlogPostForm";
@@ -10,8 +10,10 @@ import {
   postImage,
   postTitle,
 } from "../features/blogPost/blogPostSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { title, content, image } = useSelector((state) => state.blog);
 
@@ -37,6 +39,13 @@ const CreatePost = () => {
     }
     return true;
   };
+
+  useEffect(()=>{
+            if(!localStorage.getItem("token")){
+                toast.error("Please Login To Create a New Post");
+                navigate("/login")
+            }
+  },[])
 
   return (
     <div>

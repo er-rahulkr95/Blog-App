@@ -40,7 +40,12 @@ const EditPost = () => {
   };
 
   useEffect(() => {
+    if(!localStorage.getItem("token")){
+      toast.error("Please Login To Edit Post");
+      navigate("/login")
+  }else{
     dispatch(fetchPost(id));
+  }
   }, []);
 
   return (

@@ -61,15 +61,14 @@ export const userLogOut = createAsyncThunk(
   "userLogOut",
   async (userData, { rejectWithValue }) => {
     try {
-      await axios.get(`${config.apiEndpoint}/auth/logout`, {
-        withCredentials: true,
-      });
       localStorage.removeItem("token");
       localStorage.removeItem("fullName");
       localStorage.removeItem("userId");
       localStorage.removeItem("role");
       localStorage.removeItem("isLoggedIn");
-
+      await axios.get(`${config.apiEndpoint}/auth/logout`, {
+        withCredentials: true,
+      });
       toast.success("Logged Out Successfully!");
     } catch (error) {
       const errorResponse = errorHandler(error);

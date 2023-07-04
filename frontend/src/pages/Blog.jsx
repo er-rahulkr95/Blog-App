@@ -103,7 +103,7 @@ const Blog = () => {
                                         ))
                                     }
 
-                                    <Box sx={{ mt: "1rem", pt: 1, pl: 3, pb: 3, bgcolor: "#fafafa", borderTop: "0.5px solid #673de6" }}>
+                                    <Box id="comments" sx={{ mt: "1rem", pt: 1, pl: 3, pb: 3, bgcolor: "#fafafa", borderTop: "0.5px solid #673de6" }}>
                                         {userId ? <>
                                             <Typography variant='h5' color="primary">Add your comment here!</Typography>
                                             <TextareaAutosize
