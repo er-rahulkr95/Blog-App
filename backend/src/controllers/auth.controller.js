@@ -21,11 +21,13 @@ const postSignup =catchAsync( async(request,response)=>{
 const postLogin = catchAsync(async(request,response)=>{
     try{
         const userLogin= await AuthServiceInstance.login(request.body);
+        const cookieOptions = { maxAge: 24* 60 * 60 * 1000, httpOnly: true }
+        if (process.env.NODE_ENV === 'production') {
+            cookieOptions.secure = true
+            cookieOptions.sameSite = "none"
+        }
         if (userLogin.isLoggedIn) {
-            response.cookie("token", userLogin.jwt,{
-                maxAge:24*60*60*1000,
-                httpOnly:true,
-            })
+            response.cookie("token", userLogin.jwt,options)
             response.status(200).json(userLogin);
           } else {
          throw new ApiError(httpStatus.FORBIDDEN, "Invalid Credentials")
