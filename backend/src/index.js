@@ -7,9 +7,9 @@ const logConfiguration = {
 }
 const logger = winston.createLogger(logConfiguration);
 
-let server;
 
-// TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Create Mongo connection and get the express app to listen on config.port
+
+// Create Mongo connection and get the express app to listen on config.port
 mongoose.connect(config.mongoose.url,{ useNewUrlParser: true , useUnifiedTopology: true }).then(resp=>{
     logger.info("Data base connected at: "+config.mongoose.url)
     app.listen(config.port,()=>{

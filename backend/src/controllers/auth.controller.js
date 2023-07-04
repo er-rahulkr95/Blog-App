@@ -7,7 +7,6 @@ const catchAsync = require("../utils/catchAsync");
 
 const postSignup =catchAsync( async(request,response)=>{
     try{
-            // console.log(request.body)
         const userSignup = await AuthServiceInstance.signup(request.body)
         response.status(200).json(userSignup);
     }catch(error) {
@@ -45,13 +44,4 @@ const postLogout = (request,response,next) =>{
         })
 }
 
-const userProfile = catchAsync(async (request, response, next) => {
-    try{
-        const profile = await AuthServiceInstance.getUserProfile(request.user.id);
-        response.status(200).json(profile)
-    }catch(error){
-        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Cannot get user profile");
-    }
-})
-
-module.exports = {postSignup, postLogin, postLogout,userProfile};
+module.exports = {postSignup, postLogin, postLogout};

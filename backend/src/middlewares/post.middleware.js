@@ -19,27 +19,4 @@ const isPostPresent = catchAsync(async (req, res, next) => {
   }
 });
 
-
-const verifyAuthor = catchAsync(async (req, res, next) => {
-  try {
-    const { postId } = req.params;
-    const { postedBy } = req.body;
-    const resourceToDelete = await PostServiceInstance.findWithId(postId);
-    if (resourceToDelete) {
-      if (resourceToDelete.postedBy._id == postedBy) {
-        next();
-      } else {
-    throw new ApiError(httpStatus.FORBIDDEN, "Post does not belong to author")
-      }
-    } else {
-      throw new ApiError(httpStatus.NOT_FOUND, 'Post not found');
-    }
-  } catch (error) {
-    throw new ApiError(
-      httpStatus.INTERNAL_SERVER_ERROR,
-      "Could not verify author"
-    );
-  }
-});
-
-module.exports = { isPostPresent, verifyAuthor };
+module.exports = { isPostPresent };

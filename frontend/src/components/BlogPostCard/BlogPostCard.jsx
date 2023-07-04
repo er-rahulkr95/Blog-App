@@ -11,14 +11,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { addLike, removeLike } from '../../features/blogPost/blogPostAction';
 import PostModificationButtons from '../PostModificationButtons/PostModificationButtons';
-
-//import image from '../images/blog.jpg'
-
 
 
 
@@ -31,7 +26,7 @@ const BlogPostCard = ({
     likes,
     postedBy,
     likesId,
-    isDashBoard
+    isDashBoard,
 }) => {
 
    const userId = localStorage.getItem("userId")
@@ -53,7 +48,7 @@ const BlogPostCard = ({
       dispatch(removeLike({id,userId}))
     }
 
-
+        
     return (
         <Card sx={{ maxWidth: 345, height:'100%', display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
             <CardHeader

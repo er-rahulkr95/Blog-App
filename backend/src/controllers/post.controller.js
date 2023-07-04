@@ -26,7 +26,7 @@ const findPostsByUser = catchAsync(async (req, res) => {
   try {
     const {userId} = req.params;
     const result = await PostServiceInstance.findForUser(userId);
-    if (result.length) {
+    if (result.length!==0) {
       res.json(result);
     } else {
       throw new ApiError(httpStatus.NOT_FOUND, "No Posts found for the user");

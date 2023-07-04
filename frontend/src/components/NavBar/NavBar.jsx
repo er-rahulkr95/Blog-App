@@ -8,34 +8,38 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import LockPersonIcon from "@mui/icons-material/LockPerson";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useDispatch } from "react-redux";
 import { userLogOut } from "../../features/userAuthentication/userAuthAction";
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import HomeIcon from '@mui/icons-material/Home';
-import { postContent, postImage, postTitle } from "../../features/blogPost/blogPostSlice";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import HomeIcon from "@mui/icons-material/Home";
+import {
+  postContent,
+  postImage,
+  postTitle,
+} from "../../features/blogPost/blogPostSlice";
 
-const NavBar = ({ hasHiddenAuthButtons,hasHomeButton }) => {
+const NavBar = ({ hasHiddenAuthButtons, hasHomeButton }) => {
   const matches = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId")
-  const handleLogout = () =>{
-      dispatch(userLogOut())
-      navigate("/")
-      window.location.reload();
-  }
-    
-  const handleCreatePostNav =() =>{
-    dispatch(postTitle(""))
-    dispatch(postContent(""))
-    dispatch(postImage(""))
-    navigate("/post/create")
-  }
+  const userId = localStorage.getItem("userId");
+  const handleLogout = () => {
+    dispatch(userLogOut());
+    navigate("/");
+    window.location.reload();
+  };
+
+  const handleCreatePostNav = () => {
+    dispatch(postTitle(""));
+    dispatch(postContent(""));
+    dispatch(postImage(""));
+    navigate("/post/create");
+  };
 
   return (
     <nav className={styles.navBar}>
-      <Box className={styles.navBarTitle} onClick={()=>navigate("/")}>
+      <Box className={styles.navBarTitle} onClick={() => navigate("/")}>
         <h2>QBlogs</h2>
       </Box>
       <Box>
@@ -68,21 +72,45 @@ const NavBar = ({ hasHiddenAuthButtons,hasHomeButton }) => {
           </Stack>
         )}
         {!hasHiddenAuthButtons && localStorage.getItem("token") && (
-          <Stack alignItems="center" direction="row" spacing={2}>
-         {hasHomeButton && (<Button className={styles.button} variant="text" onClick={()=>navigate(`/`)}>
-              {matches ? "Blogs" : <HomeIcon />}
-            </Button>)}
-             <Button className={styles.button} variant="text" onClick={()=>navigate(`/user/dashboard/${userId}`)}>
+          <Stack alignItems="center" direction="row" spacing={matches ? 2 : 0}>
+            {hasHomeButton && (
+              <Button
+                className={styles.button}
+                variant="text"
+                onClick={() => navigate(`/`)}
+              >
+                {matches ? "Blogs" : <HomeIcon />}
+              </Button>
+            )}
+            <Button
+              className={styles.button}
+              variant="text"
+              onClick={() => navigate(`/user/dashboard/${userId}`)}
+            >
               {matches ? "Dashboard" : <DashboardCustomizeIcon />}
             </Button>
-         
-            <Button className={styles.button} variant="text" onClick={()=>handleCreatePostNav()}>
+
+            <Button
+              className={styles.button}
+              variant="text"
+              onClick={() => handleCreatePostNav()}
+            >
               {matches ? "Create Post" : <EditNoteIcon />}
             </Button>
-            <Button className={styles.button} variant="text" onClick={handleLogout}>
+            <Button
+              className={styles.button}
+              variant="text"
+              onClick={handleLogout}
+            >
               {matches ? "LOGOUT" : <LogoutIcon />}
             </Button>
-            <Avatar src="avatar.png" alt={localStorage.getItem("fullName")} sx={{ bgcolor:"#673de6" }}>{localStorage.getItem("fullName")[0]}</Avatar>
+            <Avatar
+              src="avatar.png"
+              alt={localStorage.getItem("fullName")}
+              sx={{ bgcolor: "#673de6" }}
+            >
+              {localStorage.getItem("fullName")[0]}
+            </Avatar>
           </Stack>
         )}
       </Box>

@@ -15,7 +15,7 @@ export const userSignUp = createAsyncThunk(
         password: userData.password,
       };
       const { data } = await axios.post(
-        `${config.apiEndpoint}/signup`,
+        `${config.apiEndpoint}/auth/signup`,
         userRegisrationData,
         { withCredentials: true }
       );
@@ -38,15 +38,15 @@ export const userLogIn = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        `${config.apiEndpoint}/login`,
+        `${config.apiEndpoint}/auth/login`,
         userLoginData,
         { withCredentials: true }
       );
-      localStorage.setItem("token",data.jwt);
-      localStorage.setItem("fullName",data.fullName);
-      localStorage.setItem("userId",data.userId)
-      localStorage.setItem("role",data.role)
-      localStorage.setItem("isLoggedIn",data.isLoggedIn)
+      localStorage.setItem("token", data.jwt);
+      localStorage.setItem("fullName", data.fullName);
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("isLoggedIn", data.isLoggedIn);
       toast.success("Logged In Successfully!");
       return data;
     } catch (error) {
@@ -61,7 +61,7 @@ export const userLogOut = createAsyncThunk(
   "userLogOut",
   async (userData, { rejectWithValue }) => {
     try {
-      await axios.get(`${config.apiEndpoint}/logout`, {
+      await axios.get(`${config.apiEndpoint}/auth/logout`, {
         withCredentials: true,
       });
       localStorage.removeItem("token");

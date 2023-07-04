@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// NOTE - "validator" external library and not the custom middleware at src/middlewares/validate.js
+// NOTE - "validator" external library and not the custom middleware at src/middlewares/validate.middleware.js
 const validator = require("validator");
 const config = require("../config/config");
 

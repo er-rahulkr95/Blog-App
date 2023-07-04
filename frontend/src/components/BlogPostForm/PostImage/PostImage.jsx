@@ -64,7 +64,7 @@ const PostImage = () => {
                 >
                   <Box>
                     <img
-                      style={{ maxWidth: "20rem" }}
+                      style={{ maxWidth: "15rem" }}
                       src={image}
                       alt=""
                     />

@@ -20,7 +20,8 @@ const options = {
 }
 
 const strategy = new JWTStrategy(options, async(payload, done)=>{
-    try{
+    try{    
+        
             const userFromDb = await UserServiceInstance.findWithId(payload.userId)
             done(null,userFromDb);
     }catch(error){

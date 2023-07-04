@@ -14,7 +14,7 @@ const {
 const {postValidationSchema,commentValidationSchema} = require("../validations");
 
 
-const { validateSchema,isPostPresent,verifyAuthor} = require("../middlewares");
+const { validateSchema,isPostPresent} = require("../middlewares");
 
 
 const passport = require("passport");
@@ -33,8 +33,8 @@ router.get("/all", getAllPosts);
 router.get("/user/:userId", authenticateToken, findPostsByUser);
 router.get("/id/:postId", findPostById);
 
-router.patch("/id/:postId", authenticateToken,verifyAuthor, updatePost);
-router.delete("/id/:postId", authenticateToken,verifyAuthor, deletePost);
+router.patch("/id/:postId", authenticateToken, updatePost);
+router.delete("/id/:postId", authenticateToken, deletePost);
 
 router.put(
   "/:postId/comment",

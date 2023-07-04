@@ -5,8 +5,8 @@ const cloudinary = require("../config/cloudinary")
 class PostService {
   findWithId = async (postId) => {
     try {
-      
       const result = await Post.findById(postId).populate('comments.postedBy','fullName').populate('postedBy','fullName');
+    
       return result;
     } catch (error) {
       throw error;
@@ -15,7 +15,6 @@ class PostService {
 
   findForUser = async (userId) => {
     try {
-      console.log(userId)
       const result = await Post.find({ postedBy: userId }).sort({createdAt:-1}).populate('postedBy','fullName');
       return result;
     } catch (error) {
@@ -55,7 +54,7 @@ class PostService {
           url: uploadImageResult.secure_url}}
         }else{
           dataToUpload = {title, content, postedBy: userId, image:{public_id: "",
-            url: ""}}
+            url: "https://res.cloudinary.com/dj3c3iu5w/image/upload/v1688423278/posts/blogpost-hero_aqgrkh.webp"}}
         }
 
       const newPost = await Post.create(dataToUpload);
@@ -73,7 +72,7 @@ class PostService {
         { _id: postId },
         { $push: { comments: newComment } },
         { new: true }
-      );
+      ).populate('comments.postedBy', 'fullName').populate('postedBy','fullName');
       return result;
     } catch (error) {
       throw error;
@@ -85,7 +84,8 @@ class PostService {
     try {
        await this.imageDestroy(postId);
       const result = await Post.findOneAndDelete({ _id: postId });
-      return result;
+      const updatedPost = await Post.find({ postedBy: result.postedBy }).sort({createdAt:-1}).populate('postedBy','fullName');
+      return updatedPost;
     } catch (error) {
       throw error;
     }
@@ -135,8 +135,8 @@ class PostService {
                 const like = await Post.findByIdAndUpdate(postId,{
                   $addToSet:{likes:userId}
                 });
-                  console.log(like)
-                return like;
+                  const posts = await Post.find().sort({ createdAt: -1 }).populate('postedBy', 'fullName');
+                return posts;
           }catch(error){
             throw error;
           }
@@ -148,8 +148,10 @@ class PostService {
           const removedLike = await Post.findByIdAndUpdate(postId,{
             $pull:{likes:userId}
           });
-      
-          return removedLike;
+          
+          const posts = await Post.find().sort({ createdAt: -1 }).populate('postedBy', 'fullName');
+       
+          return posts;
     }catch(error){
       throw error;
     }

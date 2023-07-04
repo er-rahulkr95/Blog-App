@@ -1,36 +1,34 @@
 .hero {
-    background-image: url("../../assets/blogpost-hero.webp");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 20rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  
-  .heroHeading {
-    color: #fc5185;
-    font-size: 2rem;
-    font-weight: 700;
-    width: 80%;
-    position: relative;
-    left: 1rem;
-    font-style: italic;
-  }
-  
-  .heroHighlight {
-    color: #fff;
-    font-weight: 700;
-    background: #fc5185;
-    border-radius: 5px;
-    padding: 0.2rem;
-  }
-  
+  background-image: url("../../assets/blogpost-hero.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  @media screen and (min-width: 768px) {
-        .heroHeading{
-            font-size: 3rem;
-        }
+.heroHeading {
+  color: #fc5185;
+  font-size: 2rem;
+  font-weight: 700;
+  width: 80%;
+  position: relative;
+  left: 1rem;
+  font-style: italic;
+}
+
+.heroHighlight {
+  color: #fff;
+  font-weight: 700;
+  background: #fc5185;
+  border-radius: 5px;
+  padding: 0.2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .heroHeading {
+    font-size: 3rem;
+  }
 }

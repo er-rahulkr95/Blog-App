@@ -1,42 +1,49 @@
 .navBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    height: 4rem;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-    background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  height: 4rem;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
 }
 
 .usernameText {
-    display: none;
+  display: none;
 }
 
 .navBarTitle {
-    cursor: pointer;
-    color: #5025d1;
-    font-weight: bolder;
-    letter-spacing: unset;
+  cursor: pointer;
+  color: #5025d1;
+  font-weight: bolder;
+  letter-spacing: unset;
 }
 
 .exploreButton {
-    color: #673de6 !important;
+  color: #673de6 !important;
 }
 
-.userName{
-    display: none;
-    text-transform:capitalize;
+.userName {
+  display: none;
+  text-transform: capitalize;
+}
+.button {
+  margin-left: 0px;
+  min-width: 3rem;
 }
 
 @media screen and (min-width: 768px) {
-    .usernameText {
-        display: block;
-    }
-    .navBarTitle{
+  .usernameText {
+    display: block;
+  }
+  .navBarTitle {
     letter-spacing: 0.25rem;
-
-    }
-    .userName{
-        display: block;
-    }
+  }
+  .userName {
+    display: block;
+  }
+  .button {
+    margin-left: 1rem;
+    min-width: 4rem;
+  }
 }

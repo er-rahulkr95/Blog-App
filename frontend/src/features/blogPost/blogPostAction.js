@@ -8,14 +8,8 @@ export const postSubmit = createAsyncThunk(
   "postSubmit",
   async (postData, { rejectWithValue }) => {
     try {
-      const userPostData = {
-        title: postData.title,
-        content: postData.content,
-        image: postData.image,
-      };
-      console.log(userPostData);
       const { data } = await axios.post(
-        `${config.apiEndpointPost}/new`,
+        `${config.apiEndpoint}/post/new`,
         postData,
         { withCredentials: true }
       );
@@ -33,12 +27,12 @@ export const postUpdate = createAsyncThunk(
   async (postData, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch(
-        `${config.apiEndpointPost}/id/${postData.id}`,
+        `${config.apiEndpoint}/post/id/${postData.id}`,
         {
           title: postData.title,
           content: postData.content,
           image: postData.image,
-          postedBy:postData.postedBy
+          postedBy: postData.postedBy,
         },
         { withCredentials: true }
       );
@@ -51,90 +45,126 @@ export const postUpdate = createAsyncThunk(
   }
 );
 
-
 export const fetchPost = createAsyncThunk(
-    "fetchPost",
-    async (postId, { rejectWithValue }) => {
-      try {
-        const { data } = await axios.get(
-          `${config.apiEndpointPost}/id/${postId}`,
-          { withCredentials: true }
-        );
-        return data;
-      } catch (error) {
-        const errorResponse = errorHandler(error);
-        toast.error(errorResponse);
-        return rejectWithValue(error);
-      }
+  "fetchPost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${config.apiEndpoint}/post/id/${postId}`,
+        { withCredentials: true }
+      );
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
     }
-  );
-  
-  export const allPost = createAsyncThunk(
-    "allPost",
-    async (post, { rejectWithValue }) => {
-      try {
-        const { data } = await axios.get(
-          `${config.apiEndpointPost}/all`,
-          { withCredentials: true }
-        );
-        return data;
-      } catch (error) {
-        const errorResponse = errorHandler(error);
-        toast.error(errorResponse);
-        return rejectWithValue(error);
-      }
+  }
+);
+
+export const allPost = createAsyncThunk(
+  "allPost",
+  async (post, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${config.apiEndpoint}/post/all`, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
     }
-  );
-  
-  export const addLike = createAsyncThunk(
-    "addLike",
-    async ({id,userId}, { rejectWithValue }) => {
-      try {
-        const { data } = await axios.put(
-          `${config.apiEndpointPost}/${id}/like`,{userId},
-          { withCredentials: true }
-        );
-        
-      } catch (error) {
-        const errorResponse = errorHandler(error);
-        toast.error(errorResponse);
-        return rejectWithValue(error);
-      }
+  }
+);
+
+export const addLike = createAsyncThunk(
+  "addLike",
+  async ({ id, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${config.apiEndpoint}/post/${id}/like`,
+        { userId },
+        { withCredentials: true }
+      );
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
     }
-  );
-  
-  export const removeLike = createAsyncThunk(
-    "removeLike",
-    async ({id,userId}, { rejectWithValue }) => {
-      try {
-        const { data } = await axios.put(
-          `${config.apiEndpointPost}/${id}/disLike`,{userId},
-          { withCredentials: true }
-        );
-        
-      } catch (error) {
-        const errorResponse = errorHandler(error);
-        toast.error(errorResponse);
-        return rejectWithValue(error);
-      }
+  }
+);
+
+export const removeLike = createAsyncThunk(
+  "removeLike",
+  async ({ id, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${config.apiEndpoint}/post/${id}/disLike`,
+        { userId },
+        { withCredentials: true }
+      );
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
     }
-  );
-  
-  export const userDashBoardBlogs = createAsyncThunk(
-    "userDashBoardBlogs",
-    async (userId, { rejectWithValue }) => {
-      try {
-        const { data } = await axios.get(
-          `${config.apiEndpointPost}/user/${userId}`,
-          { withCredentials: true }
-        );
-        
-        return data;
-      } catch (error) {
-        const errorResponse = errorHandler(error);
-        toast.error(errorResponse);
-        return rejectWithValue(error);
-      }
+  }
+);
+
+export const userDashBoardBlogs = createAsyncThunk(
+  "userDashBoardBlogs",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${config.apiEndpoint}/post/user/${userId}`,
+        { withCredentials: true }
+      );
+
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
     }
-  );
-  
+  }
+);
+
+export const addComments = createAsyncThunk(
+  "addComments",
+  async ({ id, postedBy, commentText }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${config.apiEndpoint}/post/${id}/comment`,
+        { postedBy, commentText },
+        { withCredentials: true }
+      );
+      toast.success("Comment Added Successfully!");
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  "deletePost",
+  async ({ postId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(
+        `${config.apiEndpoint}/post/id/${postId}`,
+        { withCredentials: true }
+      );
+      toast.success("Post Deleted Successfully!");
+      return data;
+    } catch (error) {
+      const errorResponse = errorHandler(error);
+      toast.error(errorResponse);
+      return rejectWithValue(error);
+    }
+  }
+);
