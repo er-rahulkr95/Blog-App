@@ -41,7 +41,7 @@ app.use(compression());
 app.use(cookieParser());
 
 const corsConfig = {
-    origin: true,
+    origin: "https://rahulkr95-qblog.netlify.app/",
     credentials: true,
   };
 
