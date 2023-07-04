@@ -4,7 +4,6 @@ import Hero from "../components/Hero/Hero";
 import Footer from "../components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  allPost,
   userDashBoardBlogs,
 } from "../features/blogPost/blogPostAction";
 import BlogPostCard from "../components/BlogPostCard/BlogPostCard";

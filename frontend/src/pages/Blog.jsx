@@ -33,7 +33,7 @@ const Blog = () => {
 
     const dispatch = useDispatch();
 
-    const { postContent, loading, commentText, comments } = useSelector((state) => state.blog);
+    const { postContent, loading, commentText } = useSelector((state) => state.blog);
 
 
     const postedBy = localStorage.getItem("userId")
@@ -73,6 +73,7 @@ const Blog = () => {
                                             <MoreVertIcon />
                                         </IconButton>
                                     }
+                                    titleTypographyProps={{variant:'h5', fontWeight:"bold" }}
                                     title={postContent.title}
                                     subheader={moment(postContent.createdAt).format('MMMM DD, YYYY')}
                                 />
