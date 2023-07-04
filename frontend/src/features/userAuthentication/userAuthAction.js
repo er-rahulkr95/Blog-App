@@ -69,7 +69,7 @@ export const userLogOut = createAsyncThunk(
       await axios.get(`${config.apiEndpoint}/auth/logout`, {
         withCredentials: true,
       });
-      toast.success("Logged Out Successfully!");
+      
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);

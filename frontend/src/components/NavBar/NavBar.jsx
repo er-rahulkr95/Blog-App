@@ -18,6 +18,7 @@ import {
   postImage,
   postTitle,
 } from "../../features/blogPost/blogPostSlice";
+import { toast } from "react-toastify";
 
 const NavBar = ({ hasHiddenAuthButtons, hasHomeButton }) => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -27,6 +28,7 @@ const NavBar = ({ hasHiddenAuthButtons, hasHomeButton }) => {
   const handleLogout = () => {
     dispatch(userLogOut());
     navigate("/");
+    toast.success("Logged Out Successfully!");
     window.location.reload();
   };
 

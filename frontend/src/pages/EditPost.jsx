@@ -29,11 +29,15 @@ const EditPost = () => {
 
   const validatePost = () => {
     if (title.trim() === "") {
-      toast.error("Title is a required field");
+      toast.warn("Title is a required field");
       return false;
     }
     if (content.trim() === "") {
-      toast.error("Content is a required field");
+      toast.warn("Content is a required field");
+      return false;
+    }
+    if (image.trim() === "") {
+      toast.warn("Image is a required field");
       return false;
     }
     return true;

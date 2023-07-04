@@ -81,7 +81,7 @@ export const blogPost = createSlice({
                 state.postContent = { ...action.payload };
                 state.title = action.payload.title;
                 state.content = action.payload.content;
-                state.image = "";
+                state.image = action.payload.image.url;
                 state.loading = true;
             }
         },

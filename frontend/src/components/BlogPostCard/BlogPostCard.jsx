@@ -59,7 +59,7 @@ const BlogPostCard = ({
 
         
     return (
-        <Card sx={{ maxWidth: 345, height:'100%', display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+        <Card sx={{ width:"100%", height:'100%', display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="user avatar">

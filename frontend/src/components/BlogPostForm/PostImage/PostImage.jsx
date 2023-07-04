@@ -10,7 +10,7 @@ const PostImage = () => {
   const { image } = useSelector((state) => state.blog);
   return (
 
-    <Box border="2px dashed blue" sx={{ p: 1, height:"8rem"}}>
+    <Box border="2px dashed blue" sx={{ p: 1, minHeight:"8rem"}}>
       <Dropzone
         acceptedFiles=".jpg,.jpeg,.png,.webp,.svg"
         multiple={false}
@@ -64,9 +64,9 @@ const PostImage = () => {
                 >
                   <Box>
                     <img
-                      style={{ maxWidth: "15rem" }}
+                      style={{ maxWidth: "100%" }}
                       src={image}
-                      alt=""
+                      alt="post image"
                     />
                   </Box>
                 </Box>

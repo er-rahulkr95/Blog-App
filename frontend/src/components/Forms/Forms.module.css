@@ -1,6 +1,7 @@
 
 .authBackground{
     background: linear-gradient(47deg, rgba(252,81,133,1) 0%, rgba(103,61,230,1) 100%);
+    min-height: 75vh;
   }
 
   .content {
