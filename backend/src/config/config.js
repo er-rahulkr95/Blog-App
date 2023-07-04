@@ -36,7 +36,4 @@ module.exports = {
       useUnifiedTopology: true,
     },
   },
-  default_wallet_money: DEFAULT_WALLET_MONEY,
-  default_payment_option: DEFAULT_PAYMENT_OPTION,
-  default_address: DEFAULT_ADDRESSS,
 };
