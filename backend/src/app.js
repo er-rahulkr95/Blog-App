@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
-const xssClean = require("xss-clean");
 const rateLimit = require('express-rate-limit')
 const hpp = require('hpp');
 
@@ -64,8 +63,8 @@ app.options("*", cors());
 // prevent sql injection
 app.use(mongoSanitize());
 
-// prevent cross-site scripting xss
-app.use(xssClean());
+
+
 
 // security to limit request to api endpoint per 15 min per IP address
 const limiter = rateLimit({
