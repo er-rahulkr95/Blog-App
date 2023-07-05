@@ -46,7 +46,6 @@ Technologies/Framework/Library used in building the backend of the project:
 - helmet
 - express-mongo-sanitize
 - express-rate-limit
-- xss-clean
 
 ### DataBase Used
 - MongoDB
@@ -123,7 +122,6 @@ meaningful commit messages.
 - Added security :
     - SQL preventions
     - Security for headers
-    - Prevent Cross Site Scripting
     - Preventing DOS attack by limiting number of queries during an amount of time
     - Param Pollution Prevention
 
