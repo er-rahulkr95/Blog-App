@@ -3,17 +3,22 @@ import axios from "axios";
 import config from "../../config/config.json";
 import { toast } from "react-toastify";
 import errorHandler from "../../utils/errorHandling";
+const token = localStorage.getItem("token")
 
 export const postSubmit = createAsyncThunk(
   "postSubmit",
   async (postData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await toast.promise( axios.post(
         `${config.apiEndpoint}/post/new`,
         postData,
-        { withCredentials: true }
-      );
-      toast.success("Posted Data Blog Data Successfully!");
+        {headers: {
+          'Authorization': `Bearer ${token}`
+        } }
+      ),  {
+        pending: 'Uploading Data',
+        success: 'Posted Blog  Successfully!',
+      });
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);
@@ -26,17 +31,23 @@ export const postUpdate = createAsyncThunk(
   "postSubmit",
   async (postData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.patch(
-        `${config.apiEndpoint}/post/id/${postData.id}`,
-        {
-          title: postData.title,
-          content: postData.content,
-          image: postData.image,
-          postedBy: postData.postedBy,
-        },
-        { withCredentials: true }
-      );
-      toast.success("Updated Data Successfully!");
+     const uploadData = { title: postData.title,
+                          content: postData.content,
+                          postedBy: postData.postedBy,}
+
+     if(!postData.image.includes("cloudinary")){
+          uploadData.image = postData.image
+     }
+      const response = await toast.promise( axios.patch(
+        `${config.apiEndpoint}/post/id/${postData.id}`,uploadData,
+        {headers: {
+            'Authorization': `Bearer ${token}`
+          } }
+      ), {
+        pending: 'Uploading Data',
+        success: 'Data Updated Successfully!',
+      });
+     
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);
@@ -50,10 +61,8 @@ export const fetchPost = createAsyncThunk(
   async (postId, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        `${config.apiEndpoint}/post/id/${postId}`,
-        { withCredentials: true }
-      );
-      return data;
+        `${config.apiEndpoint}/post/id/${postId}`)
+            return data;
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);
@@ -66,9 +75,7 @@ export const allPost = createAsyncThunk(
   "allPost",
   async (post, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${config.apiEndpoint}/post/all`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`${config.apiEndpoint}/post/all`);
       return data;
     } catch (error) {
       const errorResponse = errorHandler(error);
@@ -85,7 +92,9 @@ export const addLike = createAsyncThunk(
       const { data } = await axios.put(
         `${config.apiEndpoint}/post/${id}/like`,
         { userId },
-        { withCredentials: true }
+        { headers: {
+            'Authorization': `Bearer ${token}`
+          } }
       );
       return data;
     } catch (error) {
@@ -103,7 +112,9 @@ export const removeLike = createAsyncThunk(
       const { data } = await axios.put(
         `${config.apiEndpoint}/post/${id}/disLike`,
         { userId },
-        { withCredentials: true }
+        { headers: {
+            'Authorization': `Bearer ${token}`
+          }}
       );
       return data;
     } catch (error) {
@@ -120,7 +131,9 @@ export const userDashBoardBlogs = createAsyncThunk(
     try {
       const { data } = await axios.get(
         `${config.apiEndpoint}/post/user/${userId}`,
-        { withCredentials: true }
+        {headers: {
+            'Authorization': `Bearer ${token}`
+          } }
       );
 
       return data;
@@ -136,12 +149,17 @@ export const addComments = createAsyncThunk(
   "addComments",
   async ({ id, postedBy, commentText }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(
+      const { data } = await toast.promise( axios.put(
         `${config.apiEndpoint}/post/${id}/comment`,
         { postedBy, commentText },
-        { withCredentials: true }
-      );
-      toast.success("Comment Added Successfully!");
+        { headers: {
+            'Authorization': `Bearer ${token}`
+          } }
+      ),{
+        pending: 'Adding comment ....',
+        success: 'Comment Added Successfully!',
+      });
+     
       return data;
     } catch (error) {
       const errorResponse = errorHandler(error);
@@ -155,11 +173,15 @@ export const deletePost = createAsyncThunk(
   "deletePost",
   async ({ postId }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.delete(
+      const { data } = await toast.promise(axios.delete(
         `${config.apiEndpoint}/post/id/${postId}`,
-        { withCredentials: true }
-      );
-      toast.success("Post Deleted Successfully!");
+        {headers: {
+            'Authorization': `Bearer ${token}`
+          } }
+      ),{
+        pending: 'Deleting Post ....',
+        success: 'Post Deleted Successfully!',
+      });
       return data;
     } catch (error) {
       const errorResponse = errorHandler(error);

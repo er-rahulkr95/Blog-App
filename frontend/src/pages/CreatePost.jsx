@@ -17,12 +17,15 @@ const CreatePost = () => {
   const dispatch = useDispatch();
   const { title, content, image } = useSelector((state) => state.blog);
 
-  const handleSubmitPost = () => {
+  const handleSubmitPost = async () => {
     if (validatePost()) {
-      dispatch(postSubmit({ title, content, image }));
-      dispatch(postTitle(""));
-      dispatch(postContent(""));
-      dispatch(postImage(""));
+     let submitResult = await dispatch(postSubmit({ title, content, image }));
+     if (submitResult.meta.requestStatus === "fulfilled") {
+          dispatch(postTitle(""));
+          dispatch(postContent(""));
+          dispatch(postImage(""));
+     }
+     
     } else {
       return;
     }

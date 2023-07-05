@@ -73,24 +73,6 @@ class AuthService{
         
     }
 
-    verifyToken = async (token) =>{
-        try{
-                const verify = jwt.verify(token,this.secret)
-                const userFromDb = await UserServiceInstance.findWithId(verify.userId);
-                return userFromDb;
-        }catch(error){
-            throw error;
-        }
-    }
-
-    getUserProfile = async(userId) =>{
-        try{
-                const profileDetails = await UserServiceInstance.findProfile(userId);
-                return profileDetails;
-        }catch{
-            throw error
-        }
-    }
 }
 
 

@@ -95,6 +95,7 @@ class PostService {
     try{
       const currentPost  = await Post.findById(postId)
       const imgId = currentPost.image.public_id;
+     
       if(imgId){
         await cloudinary.uploader.destroy(imgId); 
       }
@@ -107,14 +108,13 @@ class PostService {
 
   update = async (postId, changes) => {
     try {
-      if(changes.image!==""){
+      if(changes.image!== undefined && changes.image!==""){
         await this.imageDestroy(postId);
         const newImage = await cloudinary.uploader.upload(changes.image, {
           folder: "posts",
           width: 1200,
           crop: "scale",
         });
-
         changes.image =  {
           public_id: newImage.public_id,
           url: newImage.secure_url

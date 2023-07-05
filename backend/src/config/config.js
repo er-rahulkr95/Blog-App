@@ -2,10 +2,6 @@ const dotenv = require('dotenv');
 const path = require('path');
 const Joi = require('joi');
 
-const DEFAULT_WALLET_MONEY = 500;
-const DEFAULT_PAYMENT_OPTION = "PAYMENT_OPTION_DEFAULT";
-const DEFAULT_ADDRESSS = "ADDRESS_NOT_SET";
-
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const envVarsSchema = Joi.object()
@@ -27,7 +23,6 @@ if (error) {
 module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
-  // Set mongoose configuration
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === "test" ? "-test" : ""),
     options: {

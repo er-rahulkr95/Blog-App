@@ -14,12 +14,14 @@ export const userSignUp = createAsyncThunk(
         email: userData.email,
         password: userData.password,
       };
-      const { data } = await axios.post(
+      const { data } = await toast.promise(axios.post(
         `${config.apiEndpoint}/auth/signup`,
         userRegisrationData,
         { withCredentials: true }
-      );
-      toast.success("Registered Successfully!");
+      ),{
+        pending: 'Registering User ....',
+        success: 'Registered Successfully!',
+      });
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);
@@ -49,27 +51,6 @@ export const userLogIn = createAsyncThunk(
       localStorage.setItem("isLoggedIn", data.isLoggedIn);
       toast.success("Logged In Successfully!");
       return data;
-    } catch (error) {
-      const errorResponse = errorHandler(error);
-      toast.error(errorResponse);
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const userLogOut = createAsyncThunk(
-  "userLogOut",
-  async (userData, { rejectWithValue }) => {
-    try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("fullName");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("role");
-      localStorage.removeItem("isLoggedIn");
-      await axios.get(`${config.apiEndpoint}/auth/logout`, {
-        withCredentials: true,
-      });
-      
     } catch (error) {
       const errorResponse = errorHandler(error);
       toast.error(errorResponse);

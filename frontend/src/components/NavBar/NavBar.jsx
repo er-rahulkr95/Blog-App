@@ -10,7 +10,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useDispatch } from "react-redux";
-import { userLogOut } from "../../features/userAuthentication/userAuthAction";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import HomeIcon from "@mui/icons-material/Home";
 import {
@@ -26,10 +25,14 @@ const NavBar = ({ hasHiddenAuthButtons, hasHomeButton }) => {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
   const handleLogout = () => {
-    dispatch(userLogOut());
+    localStorage.removeItem("token");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    localStorage.removeItem("isLoggedIn");
     navigate("/");
     toast.success("Logged Out Successfully!");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCreatePostNav = () => {

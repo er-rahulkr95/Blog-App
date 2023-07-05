@@ -1,6 +1,5 @@
 module.exports.postSignup = require("./auth.controller").postSignup
 module.exports.postLogin = require("./auth.controller").postLogin
-module.exports.postLogout = require("./auth.controller").postLogout
 
 
 

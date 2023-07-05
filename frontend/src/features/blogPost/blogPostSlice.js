@@ -19,7 +19,6 @@ export const blogPost = createSlice({
         image: "",
         loading: false,
         allBlog: [],
-        like: [],
         commentText: "",
         postContent: {
             title: "",
@@ -32,7 +31,7 @@ export const blogPost = createSlice({
             _id: "",
         },
         userBlog: [],
-        comments: [],
+        error: null,
     },
 
     reducers: {
@@ -50,25 +49,11 @@ export const blogPost = createSlice({
         },
     },
     extraReducers: {
-        [postSubmit.pending]: (state) => {
-            state.loading = true;
-        },
-        [postSubmit.fulfilled]: (state) => {
-            state.title = "";
-            state.content = "";
-            state.image = "";
-            state.loading = false;
-        },
+
         [postSubmit.rejected]: (state, action) => {
-            state.loading = false;
             state.error = action.payload.message;
         },
-        [postUpdate.pending]: (state) => {
-            state.loading = true;
-        },
-        [postUpdate.fulfilled]: (state) => {
-            state.loading = false;
-        },
+
         [postUpdate.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message;
@@ -102,28 +87,22 @@ export const blogPost = createSlice({
             state.loading = false;
             state.error = action.payload.message;
         },
-        [addLike.pending]: (state) => {
-            state.like = 0;
-        },
+
         [addLike.fulfilled]: (state, action) => {
             if (action.payload) {
                 state.allBlog = [...action.payload];
             }
         },
         [addLike.rejected]: (state, action) => {
-            state.like = 0;
             state.error = action.payload.message;
         },
-        [removeLike.pending]: (state) => {
-            state.like = 0;
-        },
+
         [removeLike.fulfilled]: (state, action) => {
             if (action.payload) {
                 state.allBlog = [...action.payload];
             }
         },
         [removeLike.rejected]: (state, action) => {
-            state.like = 0;
             state.error = action.payload.message;
         },
         [userDashBoardBlogs.pending]: (state) => {
@@ -139,9 +118,7 @@ export const blogPost = createSlice({
             state.loading = false;
             state.error = action.payload.message;
         },
-        [addComments.pending]: (state) => {
-            state.comments = [];
-        },
+
         [addComments.fulfilled]: (state, action) => {
             if (action.payload) {
                 state.postContent = { ...action.payload };
@@ -151,9 +128,7 @@ export const blogPost = createSlice({
         [addComments.rejected]: (state, action) => {
             state.error = action.payload.message;
         },
-        [deletePost.pending]: (state) => {
-            state.loading = true;
-        },
+
         [deletePost.fulfilled]: (state, action) => {
             if (action.payload) {
                 state.userBlog = [...action.payload];
