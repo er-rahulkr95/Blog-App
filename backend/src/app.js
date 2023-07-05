@@ -7,6 +7,11 @@ const { errorHandler } = require("./middlewares/error.middleware");
 const ApiError = require("./utils/ApiError");
 const cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xssClean = require("xss-clean");
+const rateLimit = require('express-rate-limit')
+const hpp = require('hpp');
 
 const app = express();
 
@@ -28,9 +33,9 @@ configurePassport(passport);
 // // parse urlencoded request body
 // app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.json({ limit: "15mb" }));
 app.use(bodyParser.urlencoded({
-  limit: "5mb",
+  limit: "15mb",
   extended: true
 }));
 
@@ -48,6 +53,30 @@ const corsConfig = {
 // enable cors
 app.use(cors(corsConfig));
 app.options("*", cors());
+
+// security
+
+// set security HTTP headers
+app.use(helmet());
+
+// prevent sql injection
+app.use(mongoSanitize());
+
+
+
+// prevent cross-site scripting xss
+app.use(xssClean());
+
+// security to limit request to api endpoint per 15 min per IP address
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+app.use(limiter);
+//HTTP Param Pollution
+app.use(hpp());
 
 //auth routes for register and login
 app.use("/auth",authRoutes);
