@@ -105,7 +105,7 @@ meaningful commit messages.
 
 - Created a public and protected RESTful APIs to interact between the frontend and the backend.
 
-- Capable of handling user authentication and performing CRUD operations for blog posts and comments.
+- Capable of handling user authentication and authorization and performing CRUD operations for blog posts and comments.
 
 - Used MongoDB to store user information, blog posts, comments, and likes/dislikes.
 
@@ -113,7 +113,7 @@ meaningful commit messages.
 
 - Used bcypt to hash the password before saving in the data base.
 
-- Used jsonwebtoken and passport for protected routes for handling user authentication.
+- Used jsonwebtoken and passport for protected routes for handling user authentication and authorization.
 
 - Implemeted Cloudinary library to upload image of blog post on cloudinary which is image/video hosting platform.
 
