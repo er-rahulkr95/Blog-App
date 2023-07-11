@@ -113,7 +113,7 @@ meaningful commit messages.
 
 - Used bcypt to hash the password before saving in the data base.
 
-- Used jsonwebtoken and passport for protected routes for handling user authentication and authorization.
+- Used jsonwebtoken and passport for protected routes for handling user authorization.
 
 - Implemeted Cloudinary library to upload image of blog post on cloudinary which is image/video hosting platform.
 
